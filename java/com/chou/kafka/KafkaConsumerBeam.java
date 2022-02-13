@@ -55,7 +55,8 @@ public class KafkaConsumerBeam {
 					}
 				})).apply(TextIO.write().to("wordcounts"));
 
-		p.run().waitUntilFinish();
+		//p.run().waitUntilFinish();
+		p.run();
 	}
 
 }

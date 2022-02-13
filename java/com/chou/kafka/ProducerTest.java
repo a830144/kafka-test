@@ -19,6 +19,7 @@ public class ProducerTest {
 		props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		props.put("batch.size", "1");
 		props.put("linger.ms", "20");
+		props.put("enable.idempotence", "true");
 		KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 		ProducerRecord producerRecord = new ProducerRecord<String, String>("quickstart-events", null,null, "hello world again!");
 		// producer.send(producerRecord);

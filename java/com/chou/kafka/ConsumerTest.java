@@ -26,12 +26,10 @@ public class ConsumerTest {
         props.put("enable.auto.commit", "false");
         //props.put("auto.commit.interval.ms", "1000");
         props.put("session.timeout.ms", "30000");
-        props.put("auto.offset.reset", "earliest");
+        //props.put("auto.offset.reset", "earliest");
         //props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        props.put("key.deserializer",
-                        "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put("value.deserializer",
-            "org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("key.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
         KafkaConsumer<String, String> consumer = new KafkaConsumer
             <String, String>(props);
 
@@ -40,21 +38,17 @@ public class ConsumerTest {
         TopicPartition tp = new TopicPartition(topicName, 0);
         List<TopicPartition> tps = Arrays.asList(tp);
         consumer.assign(tps);
-        //consumer.subscribe(Arrays.asList(topicName));
-        
-        
-        HashSet<TopicPartition> partitions = new HashSet<TopicPartition>();
-        for (TopicPartition partition : partitions) {
-            long offset = consumer.position(partition);
-            System.out.println(partition.partition() + ": " + offset);
-        }
-        consumer.seekToBeginning(partitions);
-        
-        
 
+        long offset = consumer.position(tp);
+        System.out.println("current offset: " + offset);
+       
+        consumer.seekToBeginning(tps);
+        
+        offset = consumer.position(tp);      
+        System.out.println("current offset after set to begin: " + offset);
+        
         //print the topic name
         System.out.println("Subscribed to topic " + topicName);
-        int i = 0;
 
         while (true) {
         	
